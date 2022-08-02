@@ -1,12 +1,20 @@
 import pygame
 
+from models import GameObject
 from utils import load_sprite
 
 class SpaceRocks:
     def __init__(self):
         self._init_pygame()
-        self.screen = pygame.display.set_mode((1920,1200))
-        self.background = load_sprite("sfondo1", False)
+        self.screen = pygame.display.set_mode((800,600))
+        self.background = load_sprite("space", False)
+        # INIT GAME OBJECT POSITION
+        self.spaceship = GameObject(
+            (400, 300), load_sprite("spaceship"), (0, 0)
+        )
+        self.asteroid = GameObject(
+            (400, 300), load_sprite("asteroid"), (1, 0)
+        )
 
     def main_loop(self):
         while True:
@@ -25,8 +33,13 @@ class SpaceRocks:
                 quit()
 
     def _process_game_logic(self):
-        pass
+        #Both objects’ position will be updated each frame 
+        self.spaceship.move()
+        self.asteroid.move()
 
     def _draw(self):
         self.screen.blit(self.background, (0, 0))
+        #Both objects’ position will be re-draw
+        self.spaceship.draw(self.screen)
+        self.asteroid.draw(self.screen)
         pygame.display.flip()
