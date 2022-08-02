@@ -2,7 +2,7 @@ from pygame.math import Vector2
 from pygame.transform import rotozoom
 
 #for loading sprite
-from utils import get_random_velocity, load_sprite, wrap_position
+from utils import get_random_velocity, load_sound, load_sprite, wrap_position
 UP = Vector2(0, -1)
 
 
@@ -36,9 +36,9 @@ class Spaceship(GameObject):
 
     def __init__(self, position, create_bullet_callback):
         self.create_bullet_callback = create_bullet_callback
+        self.laser_sound = load_sound("laser")
         # Make a copy of the original UP vector
         self.direction = Vector2(UP)
-
         super().__init__(position, load_sprite("spaceship"), Vector2(0))
 
     def rotate(self, clockwise=True):
@@ -60,6 +60,8 @@ class Spaceship(GameObject):
         bullet_velocity = self.direction * self.BULLET_SPEED + self.velocity
         bullet = Bullet(self.position, bullet_velocity)
         self.create_bullet_callback(bullet)
+        self.laser_sound.play()
+
 
 
 class Asteroid(GameObject):
