@@ -27,6 +27,7 @@ class SpaceRocks:
                 ):
                     break
             self.asteroids.append(Asteroid(position, self.asteroids.append))
+            
         
 
     def main_loop(self):
