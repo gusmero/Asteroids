@@ -2,7 +2,7 @@ from pygame.math import Vector2
 from pygame.transform import rotozoom
 
 #for loading sprite
-from utils import load_sprite, wrap_position
+from utils import get_random_velocity, load_sprite, wrap_position
 UP = Vector2(0, -1)
 
 
@@ -52,3 +52,12 @@ class Spaceship(GameObject):
 
     def accelerate(self):
         self.velocity += self.direction * self.ACCELERATION
+
+    
+
+
+class Asteroid(GameObject):
+    def __init__(self, position):
+        super().__init__(
+            position, load_sprite("asteroid"), get_random_velocity(1, 3)
+        )
