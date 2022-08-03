@@ -5,6 +5,11 @@ from pygame.math import Vector2
 from pygame.mixer import Sound
 from pygame import Color
 
+
+################################################################
+#     LOADING FILE
+#
+
 def load_sprite(name, with_alpha=True):
     path = f"./venv/assets/sprites/{name}.png"
     loaded_sprite = load(path)
@@ -14,29 +19,35 @@ def load_sprite(name, with_alpha=True):
     else:
         return loaded_sprite.convert()
 
+def load_sound(name):
+    path = f"./venv/assets/sounds/{name}.wav"
+    return Sound(path)
+
+################################################################
+
+# wrapping some object inside the screen
+# we use modulo operation wrt screnn size
 def wrap_position(position, surface):
     x, y = position
     w, h = surface.get_size()
     return Vector2(x % w, y % h)
 
+# asteroids position init
 def get_random_position(surface):
     return Vector2(
         random.randrange(surface.get_width()),
         random.randrange(surface.get_height()),
     )
-
+# asteroids velocityn init
 def get_random_velocity(min_speed, max_speed):
     speed = random.randint(min_speed, max_speed)
     angle = random.randrange(0, 360)
     return Vector2(speed, 0).rotate(angle)
 
-
-
-def load_sound(name):
-    path = f"./venv/assets/sounds/{name}.wav"
-    return Sound(path)
-
-
+#############################################################
+#    END GAME OUTPUT
+# 
+ 
 def print_text(surface, text, font, color=Color("tomato")):
     text_surface = font.render(text, True, color)
 

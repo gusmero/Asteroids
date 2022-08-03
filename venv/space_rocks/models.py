@@ -26,7 +26,7 @@ class GameObject:
 
 
 
-
+#########################################################################
 
 class Spaceship(GameObject):
 
@@ -63,7 +63,7 @@ class Spaceship(GameObject):
         self.laser_sound.play()
 
 
-
+##############################################################################
 class Asteroid(GameObject):
     def __init__(self, position, create_asteroid_callback, size=3):
         self.create_asteroid_callback = create_asteroid_callback
@@ -89,7 +89,7 @@ class Asteroid(GameObject):
                 )
                 self.create_asteroid_callback(asteroid)
 
-
+##################################################################################
 class Bullet(GameObject):
     def __init__(self, position, velocity):
         super().__init__(position, load_sprite("bullet"), velocity)

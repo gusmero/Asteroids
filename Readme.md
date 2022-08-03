@@ -16,3 +16,5 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
 python ./venv/space_rocks
+
+python -m unittest discover -s "./venv/space_rocks/test" -p "test_*.py" -v # Verbose testing
