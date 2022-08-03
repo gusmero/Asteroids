@@ -77,6 +77,8 @@ Some command routine
  python ./venv/space_rocks
 # running test 
  python -m unittest discover -s "./venv/space_rocks/test" -p "test_*.py" -v # Verbose testing
+# pylint analisys
+ pylint ./venv/space_rocks/
 ```
 
 
