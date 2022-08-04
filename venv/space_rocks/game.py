@@ -1,5 +1,5 @@
 from models import Button
-import pygame
+import pygame 
 
 import sys
 from models import GameObject
@@ -21,18 +21,10 @@ class SpaceRocks:
         self.asteroids = []
         self.bullets = []
         self.spaceship = Spaceship((400, 300), self.bullets.append)
-        self.buttons = Button(150,50,40,60,'play',None,False)
+        self.buttons = Button((400,300))
 
-        for _ in range(1):
-            while True:
-                position = get_random_position(self.screen)
-                if (
-                    position.distance_to(self.spaceship.position)
-                    > self.MIN_ASTEROID_DISTANCE
-                ):
-                    break
-            self.asteroids.append(Asteroid(position, self.asteroids.append))
-
+        
+        self.repopulate_asteroids()
         
 
     # pygame initialization
@@ -44,10 +36,18 @@ class SpaceRocks:
 
     # scheduling process
     def main_loop(self):
-        while self.spaceship:
-            self._handle_input()
-            self._process_game_logic()
+        while True:
+            self.message="Press some key"
             self._draw()
+            for event in pygame.event.get():
+                if pygame.KEYDOWN==event.type:
+                    self.message=""
+                    self.repopulate_asteroids()
+                    self.spaceship = Spaceship((400, 300), self.bullets.append)
+                    while self.spaceship and not self.asteroids==[]:
+                        self._handle_input()
+                        self._process_game_logic()
+                        self._draw()
 
  #########################################################################
 
@@ -131,5 +131,16 @@ class SpaceRocks:
 
         if self.spaceship:
             game_objects.append(self.spaceship)
-
+        # game_objects.append(self.buttons)
         return game_objects
+
+    def repopulate_asteroids(self):
+        for _ in range(1):
+            while True:
+                position = get_random_position(self.screen)
+                if (
+                    position.distance_to(self.spaceship.position)
+                    > self.MIN_ASTEROID_DISTANCE
+                ):
+                    break
+            self.asteroids.append(Asteroid(position, self.asteroids.append))
