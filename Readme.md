@@ -68,8 +68,26 @@ Asteroids tutorial
  gci -Directory | select parent, name | sort parent
  tree venv /F
   ```
-
-
+    ```sh
+Package           Version
+----------------- -------
+astroid           2.11.7
+#Makes ANSI escape character sequences (for producing colored terminal text and cursor positioning) work under MS Windows.
+colorama          0.4.5
+dill              0.3.5.1
+isort             5.10.1
+lazy-object-proxy 1.7.1
+mccabe            0.7.0
+pip               22.2.1
+platformdirs      2.5.2
+# pygame is a free and open-source cross-platform library for the development of multimedia applications like video games using Python. It uses the Simple DirectMedia Layer library and several other popular libraries to abstract the most common functions, making writing these programs a more intuitive task.
+pygame            2.1.2
+pylint            2.14.5
+setuptools        58.1.0
+tomli             2.0.1
+tomlkit           0.11.1
+wrapt             1.14.1
+  ```
 
 ### Some command routine
 ```sh
