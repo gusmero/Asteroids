@@ -1,5 +1,7 @@
+from models import Button
 import pygame
 
+import sys
 from models import GameObject
 from utils import get_random_position, load_sprite, print_text
 from models import Asteroid, Spaceship
@@ -19,6 +21,7 @@ class SpaceRocks:
         self.asteroids = []
         self.bullets = []
         self.spaceship = Spaceship((400, 300), self.bullets.append)
+        self.buttons = Button(150,50,40,60,'play',None,False)
 
         for _ in range(1):
             while True:
@@ -30,6 +33,8 @@ class SpaceRocks:
                     break
             self.asteroids.append(Asteroid(position, self.asteroids.append))
 
+        
+
     # pygame initialization
     def _init_pygame(self):
         pygame.init()
@@ -39,7 +44,7 @@ class SpaceRocks:
 
     # scheduling process
     def main_loop(self):
-        while True:
+        while self.spaceship:
             self._handle_input()
             self._process_game_logic()
             self._draw()

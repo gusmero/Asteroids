@@ -68,7 +68,8 @@ Asteroids tutorial
  gci -Directory | select parent, name | sort parent
  tree venv /F
   ```
-    ```sh
+    
+```sh
 Package           Version
 ----------------- -------
 astroid           2.11.7
@@ -79,15 +80,19 @@ isort             5.10.1
 lazy-object-proxy 1.7.1
 mccabe            0.7.0
 pip               22.2.1
+# When writing desktop application, finding the right location to store user data and configuration varies per platform. Even for single-platform apps, there may by plenty of nuances in figuring out the right location.
 platformdirs      2.5.2
-# pygame is a free and open-source cross-platform library for the development of multimedia applications like video games using Python. It uses the Simple DirectMedia Layer library and several other popular libraries to abstract the most common functions, making writing these programs a more intuitive task.
+# pygame is a free and open-source cross-platform library for the development of multimedia applications like video games using Python. It uses the Simple DirectMedia Layer library and several other popular libraries to abstract the most common functions, making writing these programs a more intuitive task. 
 pygame            2.1.2
+# Pylint is a static code analyser for Python 2 or 3 .Pylint analyses your code without actually running it. It checks for errors, enforces a coding standard, looks for code smells, and can make suggestions about how the code could be refactored. Pylint can infer actual values from your code using its internal code representation (astroid)
 pylint            2.14.5
 setuptools        58.1.0
 tomli             2.0.1
 tomlkit           0.11.1
 wrapt             1.14.1
-  ```
+# python eviroment
+python            3.10.2
+```
 
 ### Some command routine
 ```sh
@@ -101,6 +106,7 @@ wrapt             1.14.1
  python -m unittest discover -s "./venv/space_rocks/test" -p "test_*.py" -v # Verbose testing
 # pylint analisys
  pylint ./venv/space_rocks/
+  pylint ./venv/space_rocks/ --output-format=json:somefile.json,colorized
 ```
 
 
@@ -116,6 +122,9 @@ wrapt             1.14.1
 
 # Game Play
 
+
+# Architecture
+GameObject class as abstract factory of Spaceship ,Asteroids and bullet
 
 # Problem encoutered
 ### pylint build error code 30
