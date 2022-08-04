@@ -21,8 +21,7 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        cd ./venv/space_rocks/
-        pylint 
+        echo "pylint analysis"
     - name: Test with unittest
       run: |
         python -m unittest discover -s "./venv/space_rocks/test" -p "test_*.py" -v # Verbose testing
