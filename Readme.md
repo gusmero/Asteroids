@@ -46,7 +46,11 @@ This structure accounts for the location of the copy or **symlink**(Symbolic lin
 Asteroids tutorial
 [Tutorial Asteroids game](https://realpython.com/asteroids-game-python/#:~:text=%20Build%20an%20Asteroids%20Game%20With%20Python%20and,window%20that%20you%20can%20close%20by...%20More%20)
 
-Enviroment creation
+
+
+
+
+### Enviroment creation
 ```sh
 # create a visrtual enviroment
  python -m venv venv
@@ -67,7 +71,7 @@ Enviroment creation
 
 
 
-Some command routine
+### Some command routine
 ```sh
 # visual studio code script policy
  Set-ExecutionPolicy -ExecutionPolicy ByPass -Scope Process
@@ -82,7 +86,7 @@ Some command routine
 ```
 
 
-Managing package command 
+### Managing package command 
 ```sh
 # update pip package
  python -m pip install --upgrade pip
