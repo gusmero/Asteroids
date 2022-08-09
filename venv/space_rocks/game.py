@@ -24,14 +24,18 @@ class SpaceRocks:
             for event in pygame.event.get():
                 if pygame.KEYDOWN==event.type:
                     self.game.message=""
-                    self.game.repopulate_game()
-                    while self.game.spaceship and not self.game.asteroids==[]:
+                    self.game=Game()
+                    while self.game.spaceship!=None and not self.game.asteroids==[]:
                         self._handle_input()
                         self._process_game_logic()
                         self._draw()
 
  #########################################################################
 
+
+
+
+    ######################
     def _handle_input(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (
@@ -103,7 +107,3 @@ class SpaceRocks:
         pygame.display.flip()
         self.game.clock.tick(60)
 
-#####################################################################
-# USEFUL METHOD
-
- 
