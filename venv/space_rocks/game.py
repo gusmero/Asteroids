@@ -1,4 +1,4 @@
-from models import Game
+from models import Game 
 from models import Button
 import pygame 
 
@@ -23,9 +23,8 @@ class SpaceRocks:
             self._draw()
             for event in pygame.event.get():
                 if pygame.KEYDOWN==event.type:
-                    self.game.message=""
-                    self.game=Game()
-                    while self.game.spaceship!=None and not self.game.asteroids==[]:
+                    self.game.in_play_mode()
+                    while self.game.spaceship!=None and not self.game.asteroids==[] and self.game.menu_mode==False:
                         self._handle_input()
                         self._process_game_logic()
                         self._draw()
@@ -86,12 +85,16 @@ class SpaceRocks:
         #win
         if not self.game.asteroids and self.game.spaceship:
             self.game.message = "You won!"
+            pygame.time.wait(1000)
+            self.game.in_menu_mode()
         #lose
         if self.game.spaceship:
             for asteroid in self.game.asteroids:
                 if asteroid.collides_with(self.game.spaceship):
                     self.game.spaceship = None
                     self.game.message = "You lost!"
+                    pygame.time.wait(1000)
+                    self.game.in_menu_mode()
                     break
 
 

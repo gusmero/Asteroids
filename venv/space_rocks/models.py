@@ -14,6 +14,31 @@ class Game:
     MIN_ASTEROID_DISTANCE = 250
     def __init__(self) -> None:
         self._init_pygame()
+        self.menu_mode=False
+        self.screen = pygame.display.set_mode((800, 600))
+        self.background=load_sprite("startMenu", False)
+        self.clock = pygame.time.Clock()
+        self.font = pygame.font.Font(None, 64)
+        self.message = ""
+
+        self.asteroids = []
+        self.bullets = []
+        self.game_object=[]
+        self.spaceship = None
+        self.buttons = None
+        #initiliazation
+        self.in_menu_mode()
+    
+    def in_menu_mode(self):
+        self.menu_mode=True
+        self.screen = pygame.display.set_mode((800, 600))
+        self.background=load_sprite("startMenu", False)
+        self.buttons = Button((400,300))
+
+        self._set_game_object()
+
+    def in_play_mode(self):
+        self.menu_mode=False
         self.screen = pygame.display.set_mode((800, 600))
         self.background = load_sprite("space", False)
         self.clock = pygame.time.Clock()
@@ -25,8 +50,8 @@ class Game:
         self.spaceship = None
         self.buttons = Button((400,300))
 
-        
-        self.repopulate_game()
+        self.populate_game()
+        self._set_game_object()
         
 
     # pygame initialization
@@ -35,16 +60,25 @@ class Game:
         pygame.display.set_caption("Space Rocks") 
 
 
+    def _set_game_object(self):
+        if self.menu_mode:
+            self.game_object=[self.buttons]
+        else:
+            self.game_object=[*self.asteroids, *self.bullets]
+            if self.spaceship:
+                self.game_objects.append(self.spaceship)    
+
+
    # retriving game's object
     def _get_game_objects(self):
-        game_objects = [*self.asteroids, *self.bullets]
+        self.game_objects = [*self.asteroids, *self.bullets]
 
         if self.spaceship:
-            game_objects.append(self.spaceship)
+            self.game_objects.append(self.spaceship)
         # game_objects.append(self.buttons)
-        return game_objects
+        return self.game_objects
 
-    def repopulate_game(self):
+    def populate_game(self):
         self.spaceship=Spaceship((400, 300), self.bullets.append)
         for _ in range(1):
             while True:
