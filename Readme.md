@@ -118,10 +118,37 @@ python            3.10.2
  python -m pip install -r requirements.txt
 
 ```
+# Architecture
+The choice of **MVC** should be pretty obvious where a graphical game is concerned. The primary Model will be discussed later under the heading The Game Model. The primary **View** will be a PyGame window displaying graphics on the monitor. The primary **Controller** will be the keyboard, supported by PyGame's internal pygame.event module.
 
+#### The Game Model
 
-# Game Play
+**Game**
+Game is mainly a container object. It contains the Players and the Maps. It might also do things like Start() and Finish() and keep track of whose turn it is.
 
+**Player**
+A Player object represents the actual human (or computer) that is playing the game. Common attributes are Player.score and Player.color. Don't confuse it with Charactor. Pac Man is a Charactor, the person holding the joystick is a Player.
+
+**Charactor**
+A Charactor is something controlled by a player that moves around the Map. Synonyms might be "Unit" or "Avatar". It is intentionally spelled "Charactor" to avoid any ambiguity with Character which can also mean "a single letter" (also, you cannot create a table in PostgreSQL named "Character"). Common Charactor attributes are Charactor.health and Charactor.speed.
+
+In our example, "little man" will be our sole Charactor.
+
+**Map**
+A Map is an area that Charactors can move around in. There are generally two kinds of maps, discrete ones that have Sectors, and continuous ones that have Locations. A chess board is an example of a discrete map. The screen in Scorched Earth, or a level in Super Mario are examples of continuous Maps.
+
+In our example, the Map will be a discrete Map having a simple list of nine sectors.
+
+**Sector**
+A Sector is part of a Map. It is adjacent to other sectors of the map, and might have a list of any such neighbors. No Charactor can be in between Sectors. If a Charactor is in a Sector, it is in that sector entirely, and not in any other Sector (I'm speaking functionally here. It can look like it is in between Sectors, but that is an issue for the View, not the Model)
+
+In our example, we will allow no diagonal moves, only up, down, left and right. Each allowable move will be defined by the list of neighbors for a particular Sector, with the middle Sector having all four.
+
+**Location**
+We won't get into Locations of a continuous Map, as they don't apply to our example.
+
+**Item**
+You'll notice that Item is not explicitly connected to anything. This is left up to the developer. You could have a design constraint that Items must be contained by Charactors (perhaps in an intermidiate "Inventory" object), or maybe it makes more sense for your game to keep a list of a bunch of Items in the Game object. Some games might call for Sectors having Items lying around inside them
 
 # Architecture
 GameObject class as abstract factory of Spaceship ,Asteroids and bullet

@@ -3,10 +3,58 @@ from pygame.transform import rotozoom
 import sys
 import pygame
 from pygame.math import Vector2
+from utils import get_random_position, load_sprite, print_text
 
 #for loading sprite
 from utils import get_random_velocity, load_sound, load_sprite, wrap_position
 UP = Vector2(0, -1)
+
+
+class Game:
+    MIN_ASTEROID_DISTANCE = 250
+    def __init__(self) -> None:
+        self._init_pygame()
+        self.screen = pygame.display.set_mode((800, 600))
+        self.background = load_sprite("space", False)
+        self.clock = pygame.time.Clock()
+        self.font = pygame.font.Font(None, 64)
+        self.message = ""
+
+        self.asteroids = []
+        self.bullets = []
+        self.spaceship = None
+        self.buttons = Button((400,300))
+
+        
+        self.repopulate_game()
+        
+
+    # pygame initialization
+    def _init_pygame(self):
+        pygame.init()
+        pygame.display.set_caption("Space Rocks") 
+
+
+   # retriving game's object
+    def _get_game_objects(self):
+        game_objects = [*self.asteroids, *self.bullets]
+
+        if self.spaceship:
+            game_objects.append(self.spaceship)
+        # game_objects.append(self.buttons)
+        return game_objects
+
+    def repopulate_game(self):
+        self.spaceship=Spaceship((400, 300), self.bullets.append)
+        for _ in range(1):
+            while True:
+                position = get_random_position(self.screen)
+                if (
+                    position.distance_to(self.spaceship.position)
+                    > self.MIN_ASTEROID_DISTANCE
+                ):
+                    break
+            self.asteroids.append(Asteroid(position, self.asteroids.append))
 
 
 class GameObject:
@@ -107,5 +155,3 @@ class Button(GameObject):
         velocity =Vector2(0, 0)
         super().__init__(position, load_sprite("button"),velocity )
       
-
-       

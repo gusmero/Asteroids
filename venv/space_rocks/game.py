@@ -1,3 +1,4 @@
+from models import Game
 from models import Button
 import pygame 
 
@@ -7,44 +8,24 @@ from utils import get_random_position, load_sprite, print_text
 from models import Asteroid, Spaceship
 
 class SpaceRocks:
-    MIN_ASTEROID_DISTANCE = 250
+    
 
     #costructor
     def __init__(self):
-        self._init_pygame()
-        self.screen = pygame.display.set_mode((800, 600))
-        self.background = load_sprite("space", False)
-        self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font(None, 64)
-        self.message = ""
-
-        self.asteroids = []
-        self.bullets = []
-        self.spaceship = Spaceship((400, 300), self.bullets.append)
-        self.buttons = Button((400,300))
-
-        
-        self.repopulate_asteroids()
-        
-
-    # pygame initialization
-    def _init_pygame(self):
-        pygame.init()
-        pygame.display.set_caption("Space Rocks") 
+        self.game= Game()
         
 #########################################################################
 
     # scheduling process
     def main_loop(self):
         while True:
-            self.message="Press some key"
+            self.game.message="Press some key"
             self._draw()
             for event in pygame.event.get():
                 if pygame.KEYDOWN==event.type:
-                    self.message=""
-                    self.repopulate_asteroids()
-                    self.spaceship = Spaceship((400, 300), self.bullets.append)
-                    while self.spaceship and not self.asteroids==[]:
+                    self.game.message=""
+                    self.game.repopulate_game()
+                    while self.game.spaceship and not self.game.asteroids==[]:
                         self._handle_input()
                         self._process_game_logic()
                         self._draw()
@@ -58,21 +39,21 @@ class SpaceRocks:
             ):
                 quit()
             elif (
-                self.spaceship
+                self.game.spaceship
                 and event.type == pygame.KEYDOWN
                 and event.key == pygame.K_SPACE
             ):
-                self.spaceship.shoot()
+                self.game.spaceship.shoot()
 
         is_key_pressed = pygame.key.get_pressed()
 
-        if self.spaceship:
+        if self.game.spaceship:
             if is_key_pressed[pygame.K_RIGHT]:
-                self.spaceship.rotate(clockwise=True)
+                self.game.spaceship.rotate(clockwise=True)
             elif is_key_pressed[pygame.K_LEFT]:
-                self.spaceship.rotate(clockwise=False)
+                self.game.spaceship.rotate(clockwise=False)
             if is_key_pressed[pygame.K_UP]:
-                self.spaceship.accelerate()
+                self.game.spaceship.accelerate()
 
 
 
@@ -80,67 +61,49 @@ class SpaceRocks:
     def _process_game_logic(self):
 
         # move game's object
-        for game_object in self._get_game_objects():
-            game_object.move(self.screen)
+        for game_object in self.game._get_game_objects():
+            game_object.move(self.game.screen)
 
         # bullet asteroid collision
-        for bullet in self.bullets[:]:
-            for asteroid in self.asteroids[:]:
+        for bullet in self.game.bullets[:]:
+            for asteroid in self.game.asteroids[:]:
                 if asteroid.collides_with(bullet):
-                    self.asteroids.remove(asteroid)
-                    self.bullets.remove(bullet)
+                    self.game.asteroids.remove(asteroid)
+                    self.game.bullets.remove(bullet)
                     asteroid.split()
                     break
 
         # 
-        for bullet in self.bullets[:]:
-            if not self.screen.get_rect().collidepoint(bullet.position):
-                self.bullets.remove(bullet)
+        for bullet in self.game.bullets[:]:
+            if not self.game.screen.get_rect().collidepoint(bullet.position):
+                self.game.bullets.remove(bullet)
 
         # THE END OF GAME'S RULES
         #win
-        if not self.asteroids and self.spaceship:
-            self.message = "You won!"
+        if not self.game.asteroids and self.game.spaceship:
+            self.game.message = "You won!"
         #lose
-        if self.spaceship:
-            for asteroid in self.asteroids:
-                if asteroid.collides_with(self.spaceship):
-                    self.spaceship = None
-                    self.message = "You lost!"
+        if self.game.spaceship:
+            for asteroid in self.game.asteroids:
+                if asteroid.collides_with(self.game.spaceship):
+                    self.game.spaceship = None
+                    self.game.message = "You lost!"
                     break
 
 
     ###############
     def _draw(self):
-        self.screen.blit(self.background, (0, 0))
-        for game_object in self._get_game_objects():
-            game_object.draw(self.screen)
+        self.game.screen.blit(self.game.background, (0, 0))
+        for game_object in self.game._get_game_objects():
+            game_object.draw(self.game.screen)
 
-        if self.message:
-            print_text(self.screen, self.message, self.font)
+        if self.game.message:
+            print_text(self.game.screen, self.game.message, self.game.font)
 
         pygame.display.flip()
-        self.clock.tick(60)
+        self.game.clock.tick(60)
 
 #####################################################################
 # USEFUL METHOD
 
-    # retriving game's object
-    def _get_game_objects(self):
-        game_objects = [*self.asteroids, *self.bullets]
-
-        if self.spaceship:
-            game_objects.append(self.spaceship)
-        # game_objects.append(self.buttons)
-        return game_objects
-
-    def repopulate_asteroids(self):
-        for _ in range(1):
-            while True:
-                position = get_random_position(self.screen)
-                if (
-                    position.distance_to(self.spaceship.position)
-                    > self.MIN_ASTEROID_DISTANCE
-                ):
-                    break
-            self.asteroids.append(Asteroid(position, self.asteroids.append))
+ 
