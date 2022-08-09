@@ -121,7 +121,7 @@ python            3.10.2
 # Architecture
 The choice of **MVC** should be pretty obvious where a graphical game is concerned. The primary Model will be discussed later under the heading The Game Model. The primary **View** will be a PyGame window displaying graphics on the monitor. The primary **Controller** will be the keyboard, supported by PyGame's internal pygame.event module.
 
-![Data Model](/readme-img/ClassDiagram.JPG)
+![Data Model](/readme_img/ClassDiagram.JPG)
 
 #### The Game Model
 
